@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "486933335933",
+    "project_id": "quick-guard-pro-8d8e1",
+    "storage_bucket": "quick-guard-pro-8d8e1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486933335933:android:0fdbcae54b510800da8614",
+        "android_client_info": {
+          "package_name": "com.abbaskhanelectronics.quickguardpro.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3YWevUfQem_oO5wf1KKfYodL58JODIwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486933335933:android:4e0d9ea33627a8deda8614",
+        "android_client_info": {
+          "package_name": "com.abbaskhanelectronics.quickguardpro.device"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3YWevUfQem_oO5wf1KKfYodL58JODIwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
