@@ -1,0 +1,37 @@
+rules_version = '2';
+
+// Quick Guard Pro — default deny.
+// Clients (admin app) may only READ. Every write goes through Cloud Functions,
+// which enforce roles, financial rules, command security and audit logging.
+// Managed devices (anonymous auth) have NO direct database access at all.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function profile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isStaff() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && profile().active == true;
+    }
+    function hasRole(roles) { return isStaff() && profile().role in roles; }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || hasRole(['OWNER']));
+      allow write: if false;
+    }
+
+    match /customers/{id}   { allow read: if isStaff(); allow write: if false; }
+    match /agreements/{id}  { allow read: if isStaff(); allow write: if false; }
+    match /payments/{id}    { allow read: if isStaff(); allow write: if false; }
+    match /devices/{id}     { allow read: if isStaff(); allow write: if false; }
+    match /commands/{id}    { allow read: if isStaff(); allow write: if false; }
+    match /deviceEvents/{id}{ allow read: if isStaff(); allow write: if false; }
+    match /appConfig/{id}   { allow read: if isStaff(); allow write: if false; }
+    match /auditLogs/{id}   { allow read: if hasRole(['OWNER', 'MANAGER']); allow write: if false; }
+
+    // Enrollment tokens and rate-limit state are backend-only.
+    match /enrollmentTokens/{id} { allow read, write: if false; }
+    match /rateLimits/{id}       { allow read, write: if false; }
+  }
+}
