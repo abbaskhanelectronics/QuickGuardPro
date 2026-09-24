@@ -156,6 +156,6 @@ fun Date?.ago(): String {
     }
 }
 
-fun Modifier.horizontalScrollSafe(): Modifier = androidx.compose.ui.composed {
+@androidx.compose.runtime.Composable
+fun Modifier.horizontalScrollSafe(): Modifier =
     this.then(Modifier.horizontalScroll(rememberScrollState()))
-}
